@@ -11,7 +11,7 @@ nav button {
   flex-direction: column;
   position: relative;
   transition: transform 200ms;
-  z-index: 2;
+  z-index: 12;
 }
 
 nav button::after {
@@ -55,6 +55,7 @@ nav button.active span:nth-child(2) {
   height: 100vh;
   background-color: #fff;
   transition: width 400ms;
+  z-index: 11;
 }
 
 .side-bar.active {
