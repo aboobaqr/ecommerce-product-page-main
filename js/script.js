@@ -29,6 +29,7 @@ const deleteInputCart = function () {
   emptyCart.classList.remove('hidden');
   cartNotify.classList.add('hidden');
   document.querySelector('.quantity').textContent = 0;
+  quantity = 0;
 };
 
 const inputCart = function (quantity, price) {
@@ -165,7 +166,7 @@ const slider = function () {
   };
 
   init();
-  
+
   next.addEventListener('click', nextSlide);
   prev.addEventListener('click', prevSlide);
 };
