@@ -28,6 +28,7 @@ const deleteInputCart = function () {
   cartWrap.innerHTML = '';
   emptyCart.classList.remove('hidden');
   cartNotify.classList.add('hidden');
+  document.querySelector('.quantity').textContent = 0;
 };
 
 const inputCart = function (quantity, price) {
@@ -48,7 +49,7 @@ const inputCart = function (quantity, price) {
       class="delete-btn"
     />
   </div>
-  <button type="submit" class="btn">Checkout</button>
+  <button type="submit" class="checkout-btn">Checkout</button>
 </div>`;
 };
 
@@ -86,22 +87,28 @@ hamburger.addEventListener('click', () => {
   sideBar.classList.toggle('active');
 });
 
-cartImageNotify.addEventListener('click', function () {
-  cartLog.classList.remove('hidden');
-});
-
 cartWrap.addEventListener('click', function (e) {
-  if (!e.target.classList.contains('delete-btn')) return;
-  deleteInputCart();
-  document.querySelector('.quantity').textContent = 0;
+  if (
+    e.target.classList.contains('delete-btn') ||
+    e.target.classList.contains('checkout-btn')
+  )
+    deleteInputCart();
 });
 
 window.addEventListener('click', function (e) {
   const cartImgClicked = cartImageNotify.contains(e.target);
   const cartLogClicked = cartLog.contains(e.target);
-  cartImgClicked || cartLogClicked
-    ? cartLog.classList.remove('hidden')
-    : cartLog.classList.add('hidden');
+
+  if (cartImgClicked) {
+    cartLog.classList.toggle('hidden');
+  } else {
+    cartLog.classList.add('hidden');
+  }
+
+  if (cartLog.classList.contains('hidden') && cartLogClicked) {
+    cartLog.classList.remove('hidden');
+  }
+
   if (cartImgClicked) {
     sideBar.classList.remove('active');
     hamburger.classList.remove('active');
@@ -118,3 +125,49 @@ heroCont.addEventListener('click', function (e) {
     thumb.classList.add('img-active');
   });
 });
+
+const slider = function () {
+  const slides = document.querySelectorAll('.slide');
+  const prev = document.querySelector('.slider__btn--left');
+  const next = document.querySelector('.slider__btn--right');
+  let curSlide = 0;
+  const maxSlide = slides.length;
+  console.log(slides.length);
+
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+    );
+  };
+
+  // Next slide
+  const nextSlide = function () {
+    if (curSlide === maxSlide - 1) {
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+    goToSlide(curSlide);
+  };
+
+  // Prev Slide
+  const prevSlide = function () {
+    if (curSlide === 0) {
+      curSlide = maxSlide - 1;
+    } else {
+      curSlide--;
+    }
+    goToSlide(curSlide);
+  };
+
+  const init = function () {
+    goToSlide(0);
+  };
+
+  init();
+  
+  next.addEventListener('click', nextSlide);
+  prev.addEventListener('click', prevSlide);
+};
+
+slider();
